@@ -16,12 +16,12 @@ class LazyArray extends ArrayObject
     /**
      * @var boolean
      */
-    private $loaded = false;
+    protected $loaded = false;
 
     /**
      * @var LoaderInterface
      */
-    private $loader;
+    protected $loader;
 
     /**
      * @param LoaderInterface $loader
