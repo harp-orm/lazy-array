@@ -179,6 +179,46 @@ class LazyArrayTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers ::uasort
+     */
+    public function testUasort()
+    {
+        $array    = [3 => new Model('4'), 1 => new Model('1'), 4 => new Model('2')];
+        $expected = $array;
+        uasort($expected, 'Harp\LazyArray\Test\Model::compare');
+
+        $loader = new Loader($array);
+
+        $arr = new LazyArray($loader);
+
+        $arr->uasort('Harp\LazyArray\Test\Model::compare');
+
+        $this->assertTrue($arr->isLoaded(), 'Should call load() for uasort()');
+
+        $this->assertSame($expected, $arr->getArrayCopy(), 'Should sort properly with uasort');
+    }
+
+    /**
+     * @covers ::uksort
+     */
+    public function testUksort()
+    {
+        $array    = [new Model('4'), new Model('1'), new Model('2')];
+        $expected = $array;
+        uksort($expected, 'Harp\LazyArray\Test\Model::compareKey');
+
+        $loader = new Loader($array);
+
+        $arr = new LazyArray($loader);
+
+        $arr->uksort('Harp\LazyArray\Test\Model::compareKey');
+
+        $this->assertTrue($arr->isLoaded(), 'Should call load() for uksort()');
+
+        $this->assertSame($expected, $arr->getArrayCopy(), 'Should sort properly with uksort');
+    }
+
+    /**
      * @covers ::exchangeArray
      */
     public function testExchangeArray()
@@ -253,6 +293,8 @@ class LazyArrayTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(isset($arr[4]), 'Should return false for non-existing keys with offsetExists');
         unset($arr[3]);
         $this->assertFalse(isset($arr[3]), 'Should remove items with offsetUnset');
+        $arr[1] = 'CHANGED';
+        $this->assertEquals('CHANGED', $arr[1], 'Should set the correct value with offsetSet');
 
         $this->assertTrue($loader->isLoaded(), 'Should call the loader load() method when calling offset* methods');
         $this->assertTrue($arr->isLoaded(), 'Should mark as loaded when calling offset* methods');

@@ -18,6 +18,11 @@ class Model
 
     public static function compare(Model $m1, Model $m2)
     {
-        return (int) $m1->name() - (int) $m2->name();
+        return (int) $m1->getName() - (int) $m2->getName();
+    }
+
+    public static function compareKey($k1, $k2)
+    {
+        return (int) $k1 - (int) $k2;
     }
 }
