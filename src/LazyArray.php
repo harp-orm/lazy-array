@@ -19,11 +19,16 @@ class LazyArray extends ArrayObject
     private $loaded = false;
 
     /**
+     * @var LoaderInterface
+     */
+    private $loader;
+
+    /**
      * @param LoaderInterface $loader
      * @param integer         $flags
      * @param string          $iterator_class
      */
-    function __construct(LoaderInterface $loader, $flags = 0, $iterator_class = "ArrayIterator")
+    public function __construct(LoaderInterface $loader, $flags = 0, $iterator_class = "ArrayIterator")
     {
         $this->loader = $loader;
 
@@ -66,7 +71,7 @@ class LazyArray extends ArrayObject
     /**
      * @param  mixed $item
      */
-    function append($item)
+    public function append($item)
     {
         $this->load();
 
@@ -112,7 +117,7 @@ class LazyArray extends ArrayObject
     }
 
     /**
-     * @return ArrayIterator
+     * @return \ArrayIterator
      */
     public function getIterator()
     {
@@ -185,14 +190,20 @@ class LazyArray extends ArrayObject
         parent::offsetUnset($index);
     }
 
-    public function uasort(callable $cmp)
+    /**
+     * @param  callable $cmp
+     */
+    public function uasort($cmp)
     {
         $this->load();
 
         parent::uasort($cmp);
     }
 
-    public function uksort(callable $cmp)
+    /**
+     * @param  callable $cmp
+     */
+    public function uksort($cmp)
     {
         $this->load();
 
