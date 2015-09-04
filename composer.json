@@ -1,0 +1,18 @@
+{
+    "name": "harp-orm/lazy-array",
+    "description": "An array which contents can be loaded only when needed",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Ivan Kerin",
+            "email": "ikerin@gmail.com",
+            "role": "Author"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Harp\\LazyArray\\": "src/",
+            "Harp\\LazyArray\\Test\\": "tests/src/"
+        }
+    }
+}
